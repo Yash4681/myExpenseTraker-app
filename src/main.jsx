@@ -10,7 +10,7 @@ createRoot(document.getElementById("root")).render(
     <NavBar />
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="cart" element={<App />} />
+      <Route path="chart" element={<App />} />
       <Route path="add" element={<AddExpense />} />
     </Routes>
   </BrowserRouter>

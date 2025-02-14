@@ -23,7 +23,7 @@ const NavBar = () => {
             className={(e) => {
               return e.isActive ? "bg-green-400 p-2" : "p-2";
             }}
-            to={"/cart"}
+            to={"/chart"}
           >
             Chart
           </NavLink>
