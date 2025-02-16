@@ -1,24 +1,56 @@
 import { useReducer, useState } from "react";
 import "./App.css";
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import List from "./components/List";
 import TotalBalance from "./components/TotalBalance";
 import { BalanceContext } from "./context/BalanceContext";
+import AddExpenceDrawer from "./components/AddExpenceDrawer";
 
 const reducer = (state, action) => {
-  switch (action.Type) {
+  switch (action.category) {
     case "expence": {
-      return {
-        totalBalance: state.totalBalance - action.Amount,
-        totalExpence: state.totalExpence + action.Amount,
+      const temp = {
+        totalBalance: state.totalBalance - parseInt(action.amount),
+        totalExpence: state.totalExpence + parseInt(action.amount),
+        entries: [...state.entries, action],
       };
+      localStorage.setItem("balance", JSON.stringify(temp));
+      return temp;
     }
 
     case "income": {
       const temp = {
-        totalBalance: state.totalBalance + action.Amount,
+        totalBalance: state.totalBalance + parseInt(action.amount),
         totalExpence: state.totalExpence,
+        entries: [...state.entries, action],
       };
+      localStorage.setItem("balance", JSON.stringify(temp));
+      return temp;
+    }
+
+    case "delete": {
+      let type = "";
+      const newEntries = state.entries.filter((entry) => {
+        if (entry.id === action.id) {
+          type = entry.category;
+        }
+        return entry.id !== action.id;
+      });
+
+      const newBalance =
+        type === "income"
+          ? state.totalBalance - parseInt(action.Amount)
+          : state.totalBalance + parseInt(action.Amount);
+      const newExpence =
+        type === "expence"
+          ? state.totalExpence - parseInt(action.Amount)
+          : state.totalExpence;
+      const temp = {
+        totalBalance: newBalance,
+        totalExpence: newExpence,
+        entries: newEntries,
+      };
+
       localStorage.setItem("balance", JSON.stringify(temp));
       return temp;
     }
@@ -27,9 +59,18 @@ const reducer = (state, action) => {
 };
 
 const initialize = () => {
-  console.log("From Initialize.");
   const temp = JSON.parse(localStorage.getItem("balance"));
-  return temp;
+  return temp
+    ? {
+        totalExpence: temp.totalExpence ? parseInt(temp.totalExpence) : 0,
+        totalBalance: temp.totalBalance ? parseInt(temp.totalBalance) : 0,
+        entries: temp.entries,
+      }
+    : {
+        totalExpence: 0,
+        totalBalance: 0,
+        entries: new Array(),
+      };
 };
 
 function App() {
@@ -39,6 +80,7 @@ function App() {
     {
       totalExpence: 10,
       totalBalance: 1000,
+      entries: [],
     },
     initialize
   );
@@ -47,12 +89,8 @@ function App() {
     <BalanceContext.Provider value={{ state, dispatch }}>
       <div className="container flex relative">
         <List />
-        <Link to={"add"}>
-          <button className="bg-slate-500 absolute top-5 right-6 text-white font-serif font-bold my-5 py-3 px-6 rounded-2xl">
-            Add a new entry
-          </button>
-        </Link>
         <TotalBalance />
+        <AddExpenceDrawer />
         <Outlet />
       </div>
     </BalanceContext.Provider>

@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router";
 
 const NavBar = () => {
   return (
-    <nav className="flex justify-between px-3 bg-slate-300">
+    <nav className="flex h-[40px] justify-between px-3 bg-slate-300">
       <div className="flex py-2">
         <h1>myExpenseTraker</h1>
       </div>

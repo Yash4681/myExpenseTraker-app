@@ -1,19 +1,31 @@
 import React from "react";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-const ListItem = () => {
+const ListItem = ({ Amount, id, Description, Category, dispatch }) => {
   return (
     <div className="container flex justify-between px-5">
       <div className="flex">
-        <label className="w-[100px]" htmlFor={""}>
-          Lable
+        <label
+          className={`w-[100px] ${
+            Category === "income" ? "text-green-600" : ""
+          }`}
+          htmlFor={""}
+        >
+          {Amount}
         </label>
-        <p>Description</p>
+        <p>{Description}</p>
       </div>
       <button
-        className="bg-slate-400 hover:bg-slate-500 px-3 py-1 rounded-2xl"
-        name={""}
+        className="hover:bg-slate-500 px-3 my-1 rounded-xl"
+        onClick={() => {
+          return dispatch({
+            category: "delete",
+            id,
+            Amount,
+          });
+        }}
       >
-        Delete
+        <DeleteForeverIcon fontSize="small" />
       </button>
     </div>
   );
