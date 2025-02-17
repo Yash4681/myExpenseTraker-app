@@ -1,12 +1,15 @@
 import React from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Avatar } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
 
-const ListItem = ({ Amount, id, Description, Category, dispatch }) => {
+const ListItem = ({ Amount, id, Description, Category, dispatch, Date }) => {
   return (
     <div className="container flex justify-between px-5">
-      <div className="flex">
+      <div className="flex items-center">
+        <Avatar sx={{ bgcolor: deepPurple[500], width: 30, height: 30, fontSize:15, margin:1  }}>{Date}</Avatar>
         <label
-          className={`w-[100px] ${
+          className={`w-[100px] ml-3 ${
             Category === "income" ? "text-green-600" : ""
           }`}
           htmlFor={""}
