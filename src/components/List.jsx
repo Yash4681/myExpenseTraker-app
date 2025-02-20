@@ -20,6 +20,7 @@ const List = () => {
               Description={entry.description}
               id={entry.id}
               Category={entry.category}
+              Type={entry.type}
               Date={entry.date}
               dispatch={dispatch}
             />

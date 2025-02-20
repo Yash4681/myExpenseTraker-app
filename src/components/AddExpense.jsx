@@ -24,7 +24,7 @@ const AddExpense = () => {
   };
 
   const handleDate = (date) => {
-    return new Date(date)
+    return new Date(date || Date.now())
       .toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "long",
@@ -46,17 +46,38 @@ const AddExpense = () => {
           className="bg-white rounded-tl-lg rounded-br-lg px-2"
           {...register("amount", { required: true })}
         />
+        <div className="flex justify-around mt-2">
+          <div>
+            <input type="radio" {...register("type")} value="income" />
+            <label htmlFor="html" className="mx-1 font-serif">
+              Income
+            </label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              {...register("type")}
+              value="expence"
+              defaultChecked
+            />
+            <label htmlFor="css" className="mx-1 font-serif">
+              Expence
+            </label>
+          </div>
+        </div>
         <label htmlFor="category" className="mt-3 font-bold">
-          Category
+          Select Category
         </label>
         <select
           name="category"
           className="bg-white rounded-tl-lg rounded-br-lg px-2"
           {...register("category")}
         >
-          <option value="expence">Expence</option>
-          <option value="income">Income</option>
-          <option value="other">other</option>
+          <option value="food">Food</option>
+          <option value="travel">Travel</option>
+          <option value="groceries">Groceries</option>
+          <option value="house">House</option>
+          <option value="other">Other</option>
         </select>
         <label htmlFor="date" className="mt-3 font-bold">
           Select Date

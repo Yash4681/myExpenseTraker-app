@@ -7,7 +7,7 @@ import { BalanceContext } from "./context/BalanceContext";
 import AddExpenceDrawer from "./components/AddExpenceDrawer";
 
 const reducer = (state, action) => {
-  switch (action.category) {
+  switch (action.type) {
     case "expence": {
       const temp = {
         totalBalance: state.totalBalance - parseInt(action.amount),
@@ -32,7 +32,7 @@ const reducer = (state, action) => {
       let type = "";
       const newEntries = state.entries.filter((entry) => {
         if (entry.id === action.id) {
-          type = entry.category;
+          type = entry.type;
         }
         return entry.id !== action.id;
       });
