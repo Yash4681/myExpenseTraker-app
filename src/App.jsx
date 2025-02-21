@@ -5,6 +5,8 @@ import List from "./components/List";
 import TotalBalance from "./components/TotalBalance";
 import { BalanceContext } from "./context/BalanceContext";
 import AddExpenceDrawer from "./components/AddExpenceDrawer";
+import NavBar from "./components/NavBar";
+import { DarkModeContext } from "./context/DarkModeContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -74,7 +76,7 @@ const initialize = () => {
 };
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
   const [state, dispatch] = useReducer(
     reducer,
     {
@@ -86,14 +88,21 @@ function App() {
   );
 
   return (
-    <BalanceContext.Provider value={{ state, dispatch }}>
-      <div className="container flex relative">
-        <List />
-        <TotalBalance />
-        <AddExpenceDrawer />
-        <Outlet />
-      </div>
-    </BalanceContext.Provider>
+    <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
+      <BalanceContext.Provider value={{ state, dispatch }}>
+        <NavBar />
+        <div
+          className={`h-screen flex relative ${
+            darkMode ? "bg-[#3F4F44]" : "bg-[#F5EFFF]"
+          }`}
+        >
+          <List />
+          <TotalBalance />
+          <AddExpenceDrawer />
+          <Outlet />
+        </div>
+      </BalanceContext.Provider>
+    </DarkModeContext.Provider>
   );
 }
 

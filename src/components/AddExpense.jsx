@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { Outlet } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import { BalanceContext } from "../context/BalanceContext";
+import { DarkModeContext } from "../context/DarkModeContext";
 
 const AddExpense = () => {
   const [today, setToday] = useState();
+  const { darkMode } = useContext(DarkModeContext);
 
   const { dispatch } = useContext(BalanceContext);
   const { register, handleSubmit, reset } = useForm();
@@ -34,7 +36,11 @@ const AddExpense = () => {
   };
 
   return (
-    <div className="container bg-slate-300 w-[90%] rounded-2xl my-5 mx-3">
+    <div
+      className={`container ${
+        darkMode ? "bg-[#DCD7C9]" : "bg-[#CDC1FF]"
+      } w-[90%] rounded-2xl my-5 mx-3`}
+    >
       <h3 className="flex font-bold justify-center pt-4">Add a new item</h3>
       <form className="flex flex-col px-5" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="amount" className="mt-2 font-bold">
@@ -76,6 +82,7 @@ const AddExpense = () => {
           <option value="food">Food</option>
           <option value="travel">Travel</option>
           <option value="groceries">Groceries</option>
+          <option value="bills">Bills</option>
           <option value="house">House</option>
           <option value="other">Other</option>
         </select>
