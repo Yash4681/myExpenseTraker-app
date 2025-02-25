@@ -9,7 +9,7 @@ const TotalBalance = () => {
     <div
       className={`${
         darkMode ? "bg-[#DCD7C9] text-[#A27B5C]" : "bg-[#CDC1FF]"
-      } absolute top-2 left-5 px-5 py-3  flex-wrap rounded-tl-lg rounded-br-lg`}
+      } absolute top-5 left-5 px-5 py-3  flex-wrap rounded-tl-lg rounded-br-lg`}
     >
       <h1 className="font-bold font-serif">Total Balance</h1>
       <p className="text-center font-mono">{state.totalBalance}</p>

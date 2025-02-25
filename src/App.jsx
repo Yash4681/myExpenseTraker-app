@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useMemo, useReducer, useState } from "react";
 import "./App.css";
 import { Outlet } from "react-router";
 import List from "./components/List";
@@ -7,6 +7,8 @@ import { BalanceContext } from "./context/BalanceContext";
 import AddExpenceDrawer from "./components/AddExpenceDrawer";
 import NavBar from "./components/NavBar";
 import { DarkModeContext } from "./context/DarkModeContext";
+import Home from "./components/Home";
+import Chart from "./components/Chart";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -77,6 +79,8 @@ const initialize = () => {
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const darkModeValue = useMemo(() => ({ darkMode, setDarkMode }), [darkMode]);
+  const [activePage, setActivePage] = useState("home");
   const [state, dispatch] = useReducer(
     reducer,
     {
@@ -86,20 +90,22 @@ function App() {
     },
     initialize
   );
+  const balanceValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   return (
-    <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
-      <BalanceContext.Provider value={{ state, dispatch }}>
-        <NavBar />
-        <div
-          className={`h-screen flex relative ${
-            darkMode ? "bg-[#3F4F44]" : "bg-[#F5EFFF]"
-          }`}
-        >
-          <List />
-          <TotalBalance />
-          <AddExpenceDrawer />
-          <Outlet />
+    <DarkModeContext.Provider
+      value={{
+        darkMode: darkModeValue.darkMode,
+        setDarkMode: darkModeValue.setDarkMode,
+      }}
+    >
+      <BalanceContext.Provider
+        value={{ state: balanceValue.state, dispatch: balanceValue.dispatch }}
+      >
+        <div className="relative">
+          <NavBar setActivePage={setActivePage} />
+          {activePage === "home" && <Home />}
+          {activePage === "chart" && <Chart />}
         </div>
       </BalanceContext.Provider>
     </DarkModeContext.Provider>
