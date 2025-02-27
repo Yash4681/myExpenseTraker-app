@@ -9,9 +9,9 @@ const TotalExpence = () => {
     <div
       className={`${
         darkMode ? "bg-[#2C3930]" : "bg-slate-800 "
-      } w-1/2 mx-auto p-2 text-center text-white font-bold font-serif rounded-tl-lg rounded-br-lg`}
+      } w-1/2 mx-auto mt-5 p-2 text-center text-white font-bold font-serif rounded-tl-lg rounded-br-lg`}
     >
-      <label>Total Expense : {state.totalExpence}</label>
+      <label>Total Spent Amount : {state.totalExpence}</label>
     </div>
   );
 };
